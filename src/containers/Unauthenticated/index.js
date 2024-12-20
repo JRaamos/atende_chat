@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";  
+import React, { useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 
-import { Row, Col } from 'reactstrap';   
-import { ReadObject } from "services/storage"; 
+import { Row, Col } from 'reactstrap';
+import { ReadObject } from "services/storage";
 import { ThemedComponent } from "ui/theme";
 
 import {
@@ -15,12 +15,12 @@ import {
     Content,
     Touch
 } from './styled'
- 
 
-export default function ContainerUnauthenticated({ children }){   
-    
+
+export default function ContainerUnauthenticated({ children }) {
+
     const history = useHistory();
-    const navigate = to => history.push(`/${ to }`);
+    const navigate = to => history.push(`/${to}`);
 
     const init = () => {
         const authentication = ReadObject('authentication')
@@ -28,36 +28,36 @@ export default function ContainerUnauthenticated({ children }){
             completeNext()
         }
     }
- 
+
     const completeNext = () => {
         navigate('dashboard')
     }
 
-    useEffect(() => {  
+    useEffect(() => {
         init()
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
     }, [])
 
-    return ( 
-        <> 
+    return (
+        <>
             <ThemedComponent>
                 <Content>
                     <Row>
-                        <Col md={{ size:7 }}>
+                        <Col md={{ size: 7 }}>
                             <SideBackgroundImageContainer>
                                 <SideBackgroundImage />
                                 <SideBackgroundImageDegree />
                             </SideBackgroundImageContainer>
                         </Col>
-                        <Col md={{ size:5 }}>
+                        <Col md={{ size: 5 }}>
                             <FormContent>
                                 <Touch onClick={() => navigate('')}>
-                                    <AppLogo /> 
+                                    <AppLogo />
                                 </Touch>
-                                { children }
+                                {children}
                             </FormContent>
                         </Col>
-                    </Row>  
+                    </Row>
                 </Content>
             </ThemedComponent>
         </>

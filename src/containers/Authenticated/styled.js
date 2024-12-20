@@ -1,31 +1,35 @@
-import styled from 'styled-components'  
- 
-export const DashboardPage = styled.div.attrs({ 
+import styled from 'styled-components'
+
+export const DashboardPage = styled.div.attrs({
 })`            
-`;
-
-export const DashboardBody = styled.div.attrs({ 
-})`       
-    min-height: calc(100vh - 60px);
-    max-height: calc(100vh - 60px);
-    background: ${ props => props.theme.palette.colors.white };
-
-    display: flex;
-    align-items: flex-start;     
-    overflow:auto;
-`;
-
-export const DashboardBodyContent = styled.div.attrs({ 
-})`            
-    margin: 24px;
-    background: ${ props => props.theme.palette.colors.white };
-    padding: 35px 20px;
     width: 100%;
-    border-radius: 11px;
-    min-height: calc(100vh - 108px);
+    min-height: 100vh;
 `;
 
-export const Content = styled.div.attrs({ 
+export const DashboardBody = styled.div.attrs({
+})`       
+    display: flex;  
+    justify-content: flex-end;  
+    width: 100%;
+    // max-width: 1512px;
+    // margin: 0 auto;
+
+`;
+
+export const DashboardBodyContent = styled.div.attrs({
+})`  
+    min-height: calc(100vh);
+    overflow: auto;
+    padding: 0 32px 32px 32px;
+    width: ${props => props.open ? 'calc(100% - 98px)' : 'calc(100% - 270px)'};
+    @media (max-width: 991px) {
+        width: 100%;
+        padding: 0 16px;
+    }
+`;
+
+export const Content = styled.div.attrs({
 })`           
     overflow:hidden;
+
 `; 

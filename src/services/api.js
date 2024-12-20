@@ -1,19 +1,18 @@
 import { ReadObject, SaveObject } from './storage'
 
 const ENDPOINTS = {
-	'localhost' : 'http://localhost:1337/api',
-	'staging-xapps.dev' : 'https://jonathan-api.staging-xapps.dev'
-} 
+	'localhost': 'http://localhost:1337/api',
+}
 
 const envEndpoint = () => {
 	return (
 		Object.keys(ENDPOINTS)
-		.filter(fit => `${ window.location.origin }`.indexOf(fit) !== -1 )
-		.map( key => ENDPOINTS[key] )[0]
+			.filter(fit => `${window.location.origin}`.indexOf(fit) !== -1)
+			.map(key => ENDPOINTS[key])[0]
 	) || ENDPOINTS['localhost']
-} 
+}
 
-export const API_ENDPOINT = envEndpoint() 
+export const API_ENDPOINT = envEndpoint()
 
 export const GetHeaders = async authenticated => {
 	const headers = { 'Content-Type': 'application/json' }
@@ -27,18 +26,18 @@ export const GetHeaders = async authenticated => {
 export const ServerFetch = async (url, options, authenticated) => {
 	const { headers } = await GetHeaders(authenticated)
 	// console.info(url, options, headers)
-	try{
-		const response = await fetch(url, { ...options, headers }) 
+	try {
+		const response = await fetch(url, { ...options, headers })
 		if (response.statusCode === 403 && authenticated) {
 			await SaveObject('authentication', {})
 		}
-		try{
+		try {
 			return await response.json()
-		}catch(err){
+		} catch (err) {
 			console.log('ServerParseError', err)
-			return { error:true, message:response }
-		}  
-	}catch(error){
+			return { error: true, message: response }
+		}
+	} catch (error) {
 		console.log('ServerFetchError', error)
 		return false;
 	}
@@ -84,27 +83,27 @@ export const DELETE = async (path, authenticated = false) => {
 		},
 		authenticated
 	)
-} 
+}
 
 export const ReadAddressesByZipCode = async (zipCode) => {
-    try{
-        let result = await fetch(`https://viacep.com.br/ws/${ zipCode }/json/`);
-        return result.json();
-    }catch(err){ return false; }
+	try {
+		let result = await fetch(`https://viacep.com.br/ws/${zipCode}/json/`);
+		return result.json();
+	} catch (err) { return false; }
 }
 
 
 
 export const PostImage = async (fileToUpload) => {
-    const formData = new FormData()
-    formData.append('files', fileToUpload, fileToUpload.name)  
-    let { headers } = await GetHeaders(true) 
-    delete headers['Content-Type']
-    let response = await fetch(`${API_ENDPOINT}/upload`, { method: 'POST', body: formData, headers });   
-    let responseJson = await response.json()  
-    return responseJson; 
+	const formData = new FormData()
+	formData.append('files', fileToUpload, fileToUpload.name)
+	let { headers } = await GetHeaders(true)
+	delete headers['Content-Type']
+	let response = await fetch(`${API_ENDPOINT}/upload`, { method: 'POST', body: formData, headers });
+	let responseJson = await response.json()
+	return responseJson;
 }
-  
+
 export const PrepareImageFile = (image) => {
 	let btc = window.atob(image.source)
 	let btn = new Array(btc.length);
@@ -112,15 +111,15 @@ export const PrepareImageFile = (image) => {
 		btn[i] = btc.charCodeAt(i);
 	}
 	var bta = new Uint8Array(btn);
-	let boobs = new Blob([bta], {type: 'image/png' } );
-	return new File([boobs], `${ image.filename }`)
-} 
+	let boobs = new Blob([bta], { type: 'image/png' });
+	return new File([boobs], `${image.filename}`)
+}
 
 export const UploadImage = (file) => {
-	return new Promise((resolve, reject) => { 
+	return new Promise((resolve, reject) => {
 		let reader = new FileReader();
 		reader.onload = async () => {
-			let source = `${ reader.result }`.split(',')[1]
+			let source = `${reader.result}`.split(',')[1]
 			let image = {
 				filename: file.name,
 				filetype: file.type,
@@ -133,8 +132,8 @@ export const UploadImage = (file) => {
 		};
 		reader.readAsDataURL(file);
 	})
-} 
- 
+}
+
 export const parseStrapiImage = url => {
-    return !url ? '' : url.indexOf('://') !== -1 ? url : `${API_ENDPOINT.replace('/api', '')}${url}`
+	return !url ? '' : url.indexOf('://') !== -1 ? url : `${API_ENDPOINT.replace('/api', '')}${url}`
 }

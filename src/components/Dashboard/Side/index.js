@@ -1,8 +1,8 @@
-import React from "react";  
+import React, { useContext, useState } from "react";
 
 import { useHistory } from 'react-router-dom';
 
-import {  
+import {
 
     DashboardMenuContainer,
     DashboardMenu,
@@ -10,68 +10,93 @@ import {
     DashboardMenuHeaderIcon,
 
     DashboardMenuHeaderUserContent,
-    DashboardMenuHeaderUserImage, 
+    DashboardMenuHeaderUserImage,
 
     DashboardMenuOption,
     DashboardMenuContent,
     DashboardMenuFooter,
-    
-    DashboardVersionContent,
-    DashboardVersionText
 
-} from "./styled"; 
+    DashboardVersionContent,
+    DashboardVersionText,
+    OptionsContainer,
+    HeaderItemIconBadge,
+    MarketingContainer,
+    MarketingTitle,
+    MarketingText
+
+} from "./styled";
 
 import Button from "components/Form/Button";
 import { DoLogout } from "services/authentication";
+import { Icon } from "ui/styled";
+import { CoreContext } from "context/CoreContext";
 
-export default function DashboardSide({ opened, setOpened }){ 
-    const history = useHistory(); 
-    const navigate = to => history.push(`/${ to }`); 
-    
+export default function DashboardSide({ opened, setOpened }) {
+
+    const history = useHistory();
+    const navigate = to => history.push(`/${to}`);
+    const pathname = history.location.pathname;
+
+    const { noTitle, setNoTitle } = useContext(CoreContext)
+
     const verifyClose = e => {
-        if(!e.target.closest('.menu-contant')){
+        if (!e.target.closest('.menu-contant')) {
             setOpened(false)
         }
     }
 
-    const exit = async () => {
-        await DoLogout()
-        navigate('login')
+    const page = pathname.split('/')[1]
+
+    const menuItems = [
+        {
+            name: "Gerenciar Agentes",
+            page: 'manage-agents',
+            icon: 'users',
+        },
+        {
+            name: "Gerenciar Token",
+            page: 'manage-tokens',
+            icon: 'setting',
+            iconActive: 'add-user-black'
+        },
+
+    ];
+
+    const handleClick = (page) => {
+        if (page) {
+            navigate(page)
+        }
+        return;
     }
 
-    return ( 
-        <>  
+    return (
+        <>
             {
-                !opened ? null :
-                <DashboardMenuContainer onClick={verifyClose}>
-                    <DashboardMenu> 
-                        <DashboardMenuHeader onClick={() => setOpened(false)}>
-                            <DashboardMenuHeaderIcon src={'/icons/close-white.svg'} />
-                            fechar
-                        </DashboardMenuHeader> 
-                        <DashboardMenuHeaderUserContent>
-                            <DashboardMenuHeaderUserImage /> 
-                        </DashboardMenuHeaderUserContent> 
-
+                <DashboardMenuContainer onClick={verifyClose} open={opened} >
+                    <DashboardMenu open={!noTitle}>
+                        {/* <DashboardMenuHeader >
+                            <DashboardMenuHeaderIcon src={'/icons/close.svg'} onClick={() => setOpened(false)} />
+                            <Icon icon={noTitle ? "logo-mini" : "home-logo"} />
+                        </DashboardMenuHeader> */}
+                        <DashboardMenuHeaderIcon src={'/icons/close.svg'} onClick={() => setOpened(false)} />
                         <DashboardMenuContent>
-                            <DashboardMenuOption onClick={() => navigate('dashboard/me')}> 
-                                Meu Perfil
-                            </DashboardMenuOption>
+                            {
+                                menuItems.map((item, index) => (
+                                    <DashboardMenuOption key={index}
+                                        onClick={() => handleClick(item?.page)}
+                                        active={page === item.page}
+                                    >
+                                        <OptionsContainer>
+                                            <Icon icon={item.icon} nomargin />
+                                            {noTitle ? null : item.name}
+                                        </OptionsContainer>
+                                    </DashboardMenuOption>
+                                ))
+                            }
                         </DashboardMenuContent>
-                        
-                        <DashboardMenuFooter>
-                            <Button primary outline onClick={exit} centred>
-                                Sair
-                            </Button>   
-                            <DashboardVersionContent>
-                                <DashboardVersionText>1.0.0</DashboardVersionText>
-                                <DashboardVersionText>1.10.1.101</DashboardVersionText>
-                            </DashboardVersionContent>
-                        </DashboardMenuFooter>
-
                     </DashboardMenu>
                 </DashboardMenuContainer>
-            } 
+            }
         </>
     );
 }
