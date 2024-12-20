@@ -20,8 +20,8 @@ export const DashboardBodyContent = styled.div.attrs({
 })`  
     min-height: calc(100vh);
     overflow: auto;
-    padding: 0 32px 32px 32px;
-    width: ${props => props.open ? 'calc(100% - 98px)' : 'calc(100% - 270px)'};
+    padding: 16px;
+    width: ${props => props.open ? 'calc(100% - 98px)' : 'calc(100% - 318px)'};
     @media (max-width: 991px) {
         width: 100%;
         padding: 0 16px;

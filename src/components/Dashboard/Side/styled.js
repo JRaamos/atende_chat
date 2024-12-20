@@ -25,9 +25,11 @@ export const DashboardMenu = styled.div.attrs({
     position: relative;
     overflow: auto;
     min-width: ${p => p.open ? '300px' : 'fit-content'};
-    padding: 32px 16px;
+    padding: 8px 16px;
     border-radius: 8px;
-    box-shadow: 0px 4px 4px ${props => props.theme.palette.colors.shadow};
+
+    // box-shadow: 0px 2px 8px 0px ${props => props.theme.palette.colors.shadow};
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     overflow: auto;
     height: calc(100vh - 32px);
 

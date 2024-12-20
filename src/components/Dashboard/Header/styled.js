@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 export const DashboardHeaderContainer = styled.div.attrs({
 })`           
-    height: 96px;
     background: ${props => props.theme.palette.colors.background};
     display: flex;
     justify-content: space-between;

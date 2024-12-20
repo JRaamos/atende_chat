@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";  
+import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 
-import {   
+import {
     MaterialRadio
-} from './styled' 
+} from './styled'
 
 
 import FormGroup from '@mui/material/FormGroup';
@@ -12,39 +12,39 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { ThemedComponent } from "ui/theme";
 
- 
-export const Radio = ({ checked, onChange, label, title, secondary }) => {  
 
-    const [ active, setActive ] = useState(checked) 
+export const Radio = ({ checked, onChange, label, title, secondary, color }) => {
+
+    const [active, setActive] = useState(checked)
 
     const action = () => {
         const nv = !active
-        if(onChange && typeof onChange === 'function'){ onChange(nv) }
+        if (onChange && typeof onChange === 'function') { onChange(nv) }
         setActive(nv)
     }
 
     useEffect(() => {
         setActive(checked)
     }, [checked])
- 
-    return ( 
-        <>   
+
+    return (
+        <>
             <ThemedComponent>
                 <FormGroup>
-                    { title ? <FormLabel component="legend"
-                            color={ secondary ? 'secondary' : 'primary' } >{ title }</FormLabel> : null }
-                    <FormControlLabel control={<MaterialRadio checked={checked}  onChange={action} color={ secondary ? 'secondary' : 'primary' }  />} label={label} /> 
+                    {title ? <FormLabel component="legend"
+                        color={secondary ? 'secondary' : color ? color : 'green'} >{title}</FormLabel> : null}
+                    <FormControlLabel control={<MaterialRadio checked={checked} onChange={action} color={secondary ? 'secondary' : color ? color : 'green'} />} label={label} />
                 </FormGroup>
             </ThemedComponent>
- 
+
         </>
     );
-} 
+}
 
-Radio.propTypes = {  
-    label: PropTypes.string.isRequired, 
-    title: PropTypes.string,  
-    checked: PropTypes.bool, 
+Radio.propTypes = {
+    label: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    checked: PropTypes.bool,
     secondary: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
 };
@@ -52,9 +52,9 @@ Radio.propTypes = {
 
 Radio.defaultProps = {
     label: '',
-    title: '', 
-    checked: false,  
-    secondary: false, 
+    title: '',
+    checked: false,
+    secondary: false,
     onChange: undefined,
 };
 

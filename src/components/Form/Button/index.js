@@ -3,40 +3,39 @@ import PropTypes from 'prop-types';
 
 import { ColorButton, Load } from "./styled";
 import { ThemedComponent } from "ui/theme";
+import { theme } from "ui/theme-color";
 
-export const Button = ({ children, loading, primary, secondary, outline, link, nospace, centred, onClick }) => {   
+export const Button = ({ children, loading, color = 'white', outline, link, nospace, centred, onClick, start, between, startIcon, endIcon, small, border, width, radius }) => {
+  const safeColor = theme.palette?.[color] ? color : "primary"
+  return (
+    <>
+      <ThemedComponent>
+        <ColorButton variant={link ? "text" : outline ? "outlined" : "contained"} color={safeColor} nospace={nospace} centred={centred} onClick={onClick} start={start} between={between} startIcon={startIcon} endIcon={endIcon} small={small} border={border} width={width} radius={radius}>
+          {
+            loading ? <Load color={safeColor} outline={outline} /> : <>
+              {children}
+            </>
+          }
+        </ColorButton>
+      </ThemedComponent>
+    </>
+  );
+}
 
-    return ( 
-        <> 
-          <ThemedComponent>
-              <ColorButton variant={ link ? "text" : outline ? "outlined" : "contained" } color={ secondary ? 'secondary' : primary ? 'primary' : 'white' } nospace={nospace} centred={centred} onClick={onClick}>
-                {
-                  loading ? <Load primary={primary} secondary={secondary} outline={outline} /> : <>
-                    { children }
-                  </>
-                }
-              </ColorButton> 
-          </ThemedComponent>
-        </>
-    );
-} 
-   
-Button.propTypes = { 
-  children: PropTypes.node, 
-  primary: PropTypes.bool, 
-  secondary: PropTypes.bool, 
-  outline: PropTypes.bool, 
-  link: PropTypes.bool, 
-  nospace: PropTypes.bool, 
-  centred: PropTypes.bool, 
-  loading: PropTypes.bool, 
+Button.propTypes = {
+  children: PropTypes.node,
+  color: PropTypes.string,
+  outline: PropTypes.bool,
+  link: PropTypes.bool,
+  nospace: PropTypes.bool,
+  centred: PropTypes.bool,
+  loading: PropTypes.bool,
   onClick: PropTypes.func,
 };
 
 Button.defaultProps = {
   children: undefined,
-  primary: false,
-  secondary: false,
+  color: 'white',
   outline: false,
   link: false,
   nospace: false,

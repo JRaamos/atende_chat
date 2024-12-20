@@ -1,9 +1,8 @@
-import styledCmp from 'styled-components'  
- 
-import { styled } from '@mui/material/styles'; 
+import styledCmp from 'styled-components'
 
-import Checkbox from '@mui/material/Checkbox'; 
+import { styled } from '@mui/material/styles';
 
-export const MaterialCheckbox = styled(Checkbox)(({ theme }) => ({  
+import Checkbox from '@mui/material/Checkbox';
+
+export const MaterialCheckbox = styled(Checkbox)(({ theme }) => ({
 }));
- 
