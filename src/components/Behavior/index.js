@@ -1,6 +1,6 @@
 import Wrapper from 'components/Wrapper'
 import React, { useState } from 'react'
-import { BehaviorContainer, CheckContainer, Container, Content } from './styled'
+import { BehaviorContainer, ButtonContent, CheckContainer, Container, Content } from './styled'
 import Input from 'components/Form/Input'
 import { ButtonContainer, FormSpacer, Text, Title } from 'ui/styled'
 import Check from 'components/Form/Check'
@@ -74,20 +74,13 @@ export default function Behavior() {
           <Content>
             <InputLabel small nomargin>Responder na transferência de atendimento?</InputLabel>
             <ButtonContainer space>
-              <Button
-                color={responseTime ? 'blue' : 'lightgrey'}
-                nospace
-                onClick={() => setResponseTime(!responseTime)}
-              >
-                Sim
-              </Button>
-              <Button
-                color={responseTime ? 'lightgrey' : 'blue'}
-                onClick={() => setResponseTime(!responseTime)}
-                nospace
-              >
-                Não
-              </Button>
+              <ButtonContent>
+                <Button color={responseTime ? 'blue' : 'lightgrey'} nospace onClick={() => setResponseTime(!responseTime)}> Sim </Button>
+              </ButtonContent>
+              <ButtonContent>
+
+                <Button color={responseTime ? 'lightgrey' : 'blue'} onClick={() => setResponseTime(!responseTime)} nospace>Não</Button>
+              </ButtonContent>
             </ButtonContainer>
             <Text small>
               Se ativada, a IA enviará a primeira resposta já na transferência do chat.
@@ -99,17 +92,19 @@ export default function Behavior() {
         <Wrapper title="Resposta em áudio">
           <Content>
             <InputLabel small nomargin>Responder em forma de áudio</InputLabel>
-            <ButtonContainer space>
+            <ButtonContainer center space>
               {
                 optionsAudio.map((option, index) => (
-                  <Button
-                    key={index}
-                    color={audioResponse === option.value ? 'blue' : 'lightgrey'}
-                    nospace
-                    onClick={() => setAudioResponse(option.value)}
-                  >
-                    {option.label}
-                  </Button>
+                  <ButtonContent>
+                    <Button
+                      key={index}
+                      color={audioResponse === option.value ? 'blue' : 'lightgrey'}
+                      nospace
+                      onClick={() => setAudioResponse(option.value)}
+                    >
+                      {option.label}
+                    </Button>
+                  </ButtonContent>
                 ))
               }
             </ButtonContainer>
@@ -130,7 +125,7 @@ export default function Behavior() {
             </Container>
           </Content>
         </Wrapper>
-      </BehaviorContainer>
+      </BehaviorContainer >
     </>
   )
 }

@@ -8,6 +8,7 @@ import CustomTabs from 'components/Tabs'
 import AgentsProfile from 'components/AgentsProfile'
 import { ManageAgentsContainer, ManageAgentsHeader } from './styled'
 import Behavior from 'components/Behavior'
+import KnowledgeForm from 'components/KnowledgeForm'
 
 
 export default function AgentsIaForm() {
@@ -35,7 +36,7 @@ export default function AgentsIaForm() {
         <CustomTabs tabs={tabsData} activeTab={activeTab} setActiveTab={setActiveTab} >
           {activeTab !== 0 ? null : <AgentsProfile />}
           {activeTab !== 1 ? null : <Behavior />}
-          {/* {/* {activeTab !== 2 ? null : <Launch agentType={agentType} />} */}
+          {activeTab !== 2 ? null : <KnowledgeForm />}
         </CustomTabs>
       </ManageAgentsContainer>
     </ContainerAuthenticated>

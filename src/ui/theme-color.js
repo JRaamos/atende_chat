@@ -11,6 +11,10 @@ export const theme = createTheme({
       main: '#61dafb',
       contrastText: '#fff',
     },
+    lightBlue: {
+      main: '#d3ebff',
+      contrastText: '#000',
+    },
     white: {
       main: '#ffffff',
       contrastText: '#4527a0',

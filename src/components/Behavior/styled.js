@@ -26,3 +26,7 @@ export const Content = styled.div.attrs({})`
 
 export const Container = styled.div.attrs({})`
 `;
+
+export const ButtonContent = styled.div.attrs({})`
+flex: 1;
+`;

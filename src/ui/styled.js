@@ -94,8 +94,7 @@ export const Icon = styled.img.attrs((props) => ({
 export const Title = styled.div.attrs({
 })`           
     font-size: ${props => props.small ? `20` : `32px`};
-    font-weight: 900;
-    letter-spacing: -0.005em;
+    font-weight: 600;
     text-align: left;
     margin-bottom: ${props => props.nomargin ? `0` : `16px`};
     text-transform: ${props => props.upper ? `uppercase` : `none`};
@@ -105,13 +104,13 @@ export const Title = styled.div.attrs({
 export const ButtonContainer = styled.div.attrs({
 })`
     display: flex;
+    flex-wrap: wrap;
     ${p => p.column ? `
         flex-direction: column;
         ${p.start ? `align-items: flex-start;` : ``}
         ${p.center ? `align-items: center;` : ``}
         ${p.end ? `align-items: flex-end;` : ``}
     ` : ``};    
-
     justify-content: space-between;
     ${p => p.start ? `justify-content: flex-start;` : ``}
     ${p => p.center ? `justify-content: center;` : ``}
