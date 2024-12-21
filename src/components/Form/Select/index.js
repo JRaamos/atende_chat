@@ -1,16 +1,16 @@
-import React, { useState } from "react"; 
-import PropTypes from 'prop-types'; 
+import React, { useState } from "react";
+import PropTypes from 'prop-types';
 
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 
-import { 
+import {
     MaterialSelect
 } from "./styled";
 import { ThemedComponent } from "ui/theme";
 
-export const Select = ({ placeholder, options, small, value, onChange, id, secondary }) => {  
+export const Select = ({ placeholder, options, small, value, onChange, id, secondary, holder }) => {
 
     const [opened, setOpened] = useState(false)
 
@@ -19,7 +19,7 @@ export const Select = ({ placeholder, options, small, value, onChange, id, secon
     }
 
     const optionAction = item => {
-        if(onChange && typeof onChange === 'function'){
+        if (onChange && typeof onChange === 'function') {
             onChange(item.target.value)
         }
         toggleOpen()
@@ -28,37 +28,38 @@ export const Select = ({ placeholder, options, small, value, onChange, id, secon
     return (
         <>
             <ThemedComponent>
-                <FormControl variant="standard" fullWidth>
-                    <InputLabel id={id}
-                            color={ secondary ? 'secondary' : 'primary' } >{ placeholder }</InputLabel>
-                        <MaterialSelect
-                            small={small}
-                            labelId={id} 
-                            color={ secondary ? 'secondary' : 'primary' } 
-                            id={`select-${id}`}
-                            value={value}
-                            onChange={optionAction}
-                            label={placeholder}
-                        > 
-                            {
-                                options?.map((item, key) => 
-                                    <MenuItem key={key} value={`${ item.id }`}>{ item?.title }</MenuItem> 
-                                )
-                            } 
-                        </MaterialSelect>
-                </FormControl>  
+                <FormControl variant="filled" fullWidth>
+                    {holder ? null : <InputLabel id={id}
+                        color={secondary ? 'secondary' : 'primary'} >{placeholder}</InputLabel>}
+                    <MaterialSelect
+                        small={small}
+                        labelId={id}
+                        color={secondary ? 'secondary' : 'primary'}
+                        id={`select-${id}`}
+                        value={value}
+                        onChange={optionAction}
+                        disableUnderline
+                        label={placeholder}
+                    >
+                        {
+                            options?.map((item, key) =>
+                                <MenuItem key={key} value={`${item.id}`}>{item?.title}</MenuItem>
+                            )
+                        }
+                    </MaterialSelect>
+                </FormControl>
             </ThemedComponent>
         </>
     )
 }
 
 
-Select.propTypes = {  
-    placeholder: PropTypes.string, 
-    options: PropTypes.array, 
-    value: PropTypes.object, 
-    small: PropTypes.bool, 
-    secondary: PropTypes.bool, 
+Select.propTypes = {
+    placeholder: PropTypes.string,
+    options: PropTypes.array,
+    value: PropTypes.object,
+    small: PropTypes.bool,
+    secondary: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
 };
 
@@ -66,9 +67,9 @@ Select.propTypes = {
 Select.defaultProps = {
     placeholder: '',
     options: [],
-    value: undefined, 
-    small: false, 
-    secondary: false, 
+    value: undefined,
+    small: false,
+    secondary: false,
     onChange: undefined,
 };
 

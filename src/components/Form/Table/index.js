@@ -8,54 +8,141 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { EmptyMessage, Load, LoadCenter } from 'ui/styled';
+import CustomTablePagination from 'components/CustomTablePagination';
+import { CheckContainer, HeaderUserImage, RowContainer, WhiteBg } from './styled';
+import Check from '../Check';
+// font - family: Plus Jakarta Sans;
+// font - size: 14px;
+// font - weight: 400;
+// line - height: 28px;
+// letter - spacing: 0.02em;
+// text - align: left;
+// text - underline - position: from - font;
+// text - decoration - skip - ink: none;
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.colors.blue,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
+
+const StyledTableCell = styled(TableCell)(({ theme, noMax, border }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    color: theme.palette.colors.black,
+    textTransform: 'uppercase',
+    fontSize: 12,
+    fontWeight: 700,
+    lineHeight: '16.8px',
+    textAlign: 'left',
+    fontFamily: 'Urbanist',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: '28px',
+    textAlign: 'left',
+    fontFamily: 'Plus Jakarta Sans',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '270px',
+    whiteSpace: 'nowrap',
+    border: border && `1px solid ${theme.palette.colors.shadow}`,
+
+  },
 }));
 
-export default function BasicTable({ columns, rows, loading }) {
+const StyledTableBody = styled(TableBody)(({ theme, border }) => ({
+  border: border && `1px solid ${theme.palette.colors.shadow}`,
+}));
+
+export default function BasicTable({ columns, rows, loading, pagination, selectable, border }) {
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const [selected, setSelected] = React.useState([]);
+
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const toggleAll = () => {
+    setSelected(selected.length === rows.length ? [] : rows);
+  };
+
+  const isSelected = item => selected.map(m => m.id).includes(item.id);
+
+  const toggleSelected = item => {
+    setSelected(isSelected(item) ? selected.filter(f => f.id !== item.id) : [...selected, item]);
+  };
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 150 }} aria-label="simple table">
+    <TableContainer component={Paper} style={{ boxShadow: 'none' }}>
+      <Table sx={{ minWidth: 700 }} aria-label="simple table">
         <TableHead>
           <TableRow>
+            {selectable && (
+              <StyledTableCell width={'40px'}>
+                <WhiteBg>
+                  <CheckContainer>
+                    <Check nospace primary checked={selected.length === rows.length} onChange={toggleAll} />
+                  </CheckContainer>
+                </WhiteBg>
+              </StyledTableCell>
+            )}
             {
-                columns?.map((item, key) => 
-                    <StyledTableCell key={key}  align={key === 0 ? "left" : "right" } >{ item.title }</StyledTableCell>
-                )
+              columns?.map((item, key) =>
+                <StyledTableCell key={key} align={key === 0 ? "left" : "left"} >{item.title}</StyledTableCell>
+              )
             }
           </TableRow>
         </TableHead>
-        <TableBody>
-          {rows.map((row) => (
+        <StyledTableBody border={border}>
+          {(rowsPerPage > 0
+            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : rows
+          ).map((row) => (
             <TableRow
               key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+
             >
-                {
-                    columns?.map((item, key) => 
-                        <TableCell key={key} align={ key === 0 ? "left" :  "right" } >
-                            { item?.['renderCell'] ? item.renderCell({row}) : row?.[item.ref] }
-                        </TableCell>
-                    )
-                }
+              {selectable && (
+                <TableCell align="center">
+                  <WhiteBg>
+                    <CheckContainer>
+                      <Check nospace primary checked={isSelected(row)} onChange={() => toggleSelected(row)} />
+                    </CheckContainer>
+                  </WhiteBg>
+                </TableCell>
+              )}
+              {
+                columns?.map((item, key) =>
+                  <StyledTableCell key={key} align={key === 0 ? "left" : "left"} border={border}>
+                    <RowContainer>
+                      {item?.['profile'] ? <HeaderUserImage url={row?.url} /> : null}
+                      {item?.['renderCell'] ? item.renderCell({ row }) : row?.[item.ref]}
+                    </RowContainer>
+                  </StyledTableCell>
+                )
+              }
             </TableRow>
           ))}
-        </TableBody>
+        </StyledTableBody>
       </Table>
       {
         !loading ? <>
-          { rows?.length ? null : <EmptyMessage>Nenhum registro encontrado</EmptyMessage> }
-        </> : 
+          {rows?.length ? null : <EmptyMessage>Nenhum registro encontrado</EmptyMessage>}
+        </> :
           <LoadCenter>
             <Load />
-          </LoadCenter> 
+          </LoadCenter>
+      }
+      {!pagination ? null :
+        <>
+          <CustomTablePagination
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+          />
+        </>
       }
     </TableContainer>
   );

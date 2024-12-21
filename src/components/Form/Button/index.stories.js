@@ -24,7 +24,7 @@ DefaultOutline.args = {
 export const Primary = Template.bind({});
 
 Primary.args = {
-   primary: true, 
+   color: 'primary', 
    children: 'Primary Text'
 }; 
 
@@ -38,7 +38,7 @@ PrimaryOutline.args = {
 export const Secondary = Template.bind({});
 
 Secondary.args = {
-   secondary: true, 
+   color: 'secondary', 
    children: 'Secondary Text'
 }; 
 

@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";  
- 
-import Header from 'components/Dashboard/Header'  
-  
-import { 
+import React, { useEffect } from "react";
+
+import Header from 'components/Dashboard/Header'
+
+import {
     DashboardPage,
     DashboardBody,
     DashboardBodyContent,
@@ -12,39 +12,39 @@ import { ReadObject } from "services/storage";
 import { useHistory } from "react-router-dom";
 import { ThemedComponent } from "ui/theme";
 
-export default function ContainerAuthenticated({ children }){  
+export default function ContainerAuthenticated({ children, free }) {
 
     const history = useHistory();
-    const navigate = to => history.push(`/${ to }`);
+    const navigate = to => history.push(`/${to}`);
 
     const init = () => {
         const authentication = ReadObject('authentication')
-        if (!authentication?.jwt) {
+        if (!authentication?.jwt && !free) {
             completeNext()
         }
     }
- 
+
     const completeNext = () => {
         navigate('login')
     }
 
-    useEffect(() => {  
+    useEffect(() => {
         init()
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
     }, [])
 
-    return ( 
+    return (
         <>
             <ThemedComponent>
                 <Content>
                     <DashboardPage>
-                        <Header /> 
-                        <DashboardBody> 
-                            <DashboardBodyContent>                     
-                                { children }
+                        <DashboardBody>
+                            <Header />
+                            <DashboardBodyContent>
+                                {children}
                             </DashboardBodyContent>
-                        </DashboardBody>  
-                    </DashboardPage> 
+                        </DashboardBody>
+                    </DashboardPage>
                 </Content>
             </ThemedComponent>
         </>

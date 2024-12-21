@@ -1,14 +1,14 @@
-import { createTheme } from '@mui/material/styles'; 
+import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
   mode: 'light',
   palette: {
     primary: {
-      main: '#4527a0', 
+      main: '#192d3e',
       contrastText: '#fff',
     },
     secondary: {
-      main: '#d81b60',
+      main: '#61dafb',
       contrastText: '#fff',
     },
     white: {
@@ -28,14 +28,22 @@ export const theme = createTheme({
     success: {
       main: '#66bb6a',
     },
-    colors:{
-        white: '#ffffff',
-        black: '#000000',
-        grey: '#4C4C4C',
-        backgroundgrey: '#F7F7F7',
-        lightgrey: '#A4A4A4',
-        shadow: 'rgba(0,0,0,.16)',
-        lightshadow: 'rgba(112,112,112,.06)'
+    lightgrey: {
+      main: '#F7F7F7',
+      contrastText: '#000',
+    },
+    blue: {
+      main: '#1E90FF',
+      contrastText: '#fff',
+    },
+    colors: {
+      white: '#ffffff',
+      black: '#000000',
+      grey: '#4C4C4C',
+      backgroundgrey: '#F7F7F7',
+      lightgrey: '#A4A4A4',
+      shadow: 'rgba(0,0,0,.16)',
+      lightshadow: 'rgba(112,112,112,.06)'
     }
   },
 });  

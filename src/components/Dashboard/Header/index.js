@@ -1,26 +1,36 @@
-import React, { useState } from "react";   
- 
+import React, { useContext, useState } from "react";
+
 import DashboardSide from "../Side";
-import { 
+import {
     DashboardHeaderContainer,
     DashboardHeaderAction,
-    DashboardHeaderActionIcon
-} from "./styled"; 
+    DashboardHeaderActionIcon,
+    HeaderContainer,
+    HeaderItem,
+    HeaderItemTitle,
+    HeaderItemText,
+    HeaderUserContainer,
+    HeaderUserImage,
+    HeaderPlanTitle
+} from "./styled";
+import { CoreContext } from "context/CoreContext";
+import { Icon, Overlay } from "ui/styled";
 
-export default function DashboardHeader(){  
-    
-    const [opened, setOpened] = useState(false) 
 
-    return ( 
-        <> 
-            <DashboardHeaderContainer>
+export default function DashboardHeader() {
+
+    const [opened, setOpened] = useState(false)
+    const [userModal, setUserModal] = useState(false)
+    const { noTitle, user } = useContext(CoreContext)
+
+    return (
+        <>
+            <DashboardHeaderContainer open={noTitle}>
                 <DashboardHeaderAction onClick={() => setOpened(true)}>
-                    <DashboardHeaderActionIcon src={`/icons/menu.svg`} alt="menu-icon" />
-                    Menu
-                </DashboardHeaderAction> 
-                {/*  */}
-            </DashboardHeaderContainer> 
-            <DashboardSide opened={opened} setOpened={setOpened} /> 
+                    {opened ? null : <DashboardHeaderActionIcon src={`/icons/menu.svg`} alt="menu-icon" />}
+                </DashboardHeaderAction>
+            </DashboardHeaderContainer>
+            <DashboardSide opened={opened} setOpened={setOpened} />
         </>
     );
-}
+};

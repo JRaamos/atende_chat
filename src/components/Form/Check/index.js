@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";  
+import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 
-import {   
+import {
     MaterialCheckbox
-} from './styled' 
+} from './styled'
 
 
 import FormGroup from '@mui/material/FormGroup';
@@ -12,39 +12,39 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { ThemedComponent } from "ui/theme";
 
- 
-export const Check = ({ checked, onChange, label, title, secondary }) => {  
 
-    const [ active, setActive ] = useState(checked)  
+export const Check = ({ checked, onChange, label, title, secondary, success }) => {
+
+    const [active, setActive] = useState(checked)
 
     const action = () => {
         const nv = !active
-        if(onChange && typeof onChange === 'function'){ onChange(nv) }
+        if (onChange && typeof onChange === 'function') { onChange(nv) }
         setActive(nv)
     }
 
     useEffect(() => {
         setActive(checked)
     }, [checked])
- 
-    return ( 
-        <>   
+
+    return (
+        <>
             <ThemedComponent>
                 <FormGroup>
-                    { title ? <FormLabel component="legend"
-                            color={ secondary ? 'secondary' : 'primary' } >{ title }</FormLabel> : null }
-                    <FormControlLabel control={<MaterialCheckbox checked={checked}  onChange={action} color={ secondary ? 'secondary' : 'primary' }  />} label={label} /> 
+                    {title ? <FormLabel component="legend"
+                        color={secondary ? 'secondary' : 'primary'} >{title}</FormLabel> : null}
+                    <FormControlLabel control={<MaterialCheckbox checked={checked} onChange={action} color={secondary ? 'secondary' : success ? 'success' : 'primary'} />} label={label} />
                 </FormGroup>
             </ThemedComponent>
- 
+
         </>
     );
-} 
+}
 
-Check.propTypes = {  
-    label: PropTypes.string.isRequired, 
-    title: PropTypes.string,  
-    checked: PropTypes.bool, 
+Check.propTypes = {
+    label: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    checked: PropTypes.bool,
     secondary: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
 };
@@ -52,9 +52,9 @@ Check.propTypes = {
 
 Check.defaultProps = {
     label: '',
-    title: '', 
-    checked: false,  
-    secondary: false, 
+    title: '',
+    checked: false,
+    secondary: false,
     onChange: undefined,
 };
 

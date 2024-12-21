@@ -1,6 +1,6 @@
-import React from "react"; 
+import React from "react";
 
-import { Row, Col, Container } from 'reactstrap'; 
+import { Row, Col, Container } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -14,19 +14,19 @@ import {
     FooterPhoneContent,
     FooterPhoneIcon,
     FooterCopyright
-} from './styled' 
+} from './styled'
 
-export default function Footer(){ 
- 
+export default function Footer() {
+
     const history = useHistory();
-    const navigate = to => history.push(`/${ to }`);
+    const navigate = to => history.push(`/${to}`);
 
-    return ( 
-        <> 
+    return (
+        <>
             <FooterContainer>
                 <Container>
                     <Row>
-                        <Col md={{size:5}}>
+                        <Col md={{ size: 5 }}>
                             <FooterLogo />
                             <FooterTitle>AppGenerated</FooterTitle>
                             <FooterText>Rua sem nome, 18, Sala 02, SP, São Paulo</FooterText>
@@ -35,16 +35,16 @@ export default function Footer(){
                                 <FooterLink>+55 (55) 5555-5555</FooterLink>
                             </FooterPhoneContent>
                         </Col>
-                        <Col md={{size:7}}>
+                        <Col md={{ size: 7 }}>
                             <Row>
-                                <Col md={{size:6}}>
+                                <Col md={{ size: 6 }}>
                                     <FooterSection>
                                         <FooterTitle>&nbsp;</FooterTitle>
                                         <FooterLink onClick={() => navigate('')}>Inicio</FooterLink>
                                         <FooterLink onClick={() => navigate('about')}>Sobre</FooterLink>
                                     </FooterSection>
                                 </Col>
-                                <Col md={{size:6}}> 
+                                <Col md={{ size: 6 }}>
                                     <FooterSection>
                                         <FooterTitle>Nos siga nas redes</FooterTitle>
                                         <FooterLink>
@@ -54,16 +54,16 @@ export default function Footer(){
                                         <FooterLink>
                                             <FooterLinkImage src={'/icons/face.svg'} />
                                             Facebook
-                                        </FooterLink> 
+                                        </FooterLink>
                                     </FooterSection>
                                 </Col>
                             </Row>
                         </Col>
                     </Row>
                     <Row>
-                        <Col > 
-                            <FooterCopyright>Criado por X-Apps</FooterCopyright> 
-                        </Col> 
+                        <Col >
+                            <FooterCopyright>Criado por JLTecnologia</FooterCopyright>
+                        </Col>
                     </Row>
                 </Container>
             </FooterContainer>
