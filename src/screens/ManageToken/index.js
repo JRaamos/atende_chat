@@ -1,7 +1,7 @@
 import ContainerAuthenticated from 'containers/Authenticated'
 import React, { useContext, useMemo, useState } from 'react'
 import { ManageTokenContainer, ManageTokenHeader } from './styled'
-import { ButtonContainer, FormSpacer, Icon, Title } from 'ui/styled'
+import { ButtonContainer, FormSpacer, HelpContainer, HelpText, Icon, Title } from 'ui/styled'
 import Button from 'components/Form/Button'
 import BasicTable from 'components/Form/Table'
 import { CoreContext } from 'context/CoreContext'
@@ -51,10 +51,15 @@ export default function ManageToken() {
     <ContainerAuthenticated free>
       <ManageTokenContainer>
         <ManageTokenHeader>
-          <Title small nomargin>Gerenciar Tokens <Icon icon="help" pointer isHovered={isHovered}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave} /></Title>
-          <Button color='primary' width={'fit-Content'} nospace>Criar Novo</Button>
+          <Title small nomargin>Gerenciar Tokens
+            <HelpContainer>
+              {!isHovered ? null : <HelpText isHovered={isHovered}>Ajuda</HelpText>}
+              <Icon icon="help" pointer isHovered={isHovered}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave} />
+            </HelpContainer>
+          </Title>
+          <Button color='primary' width={'fit-Content'} nospace onClick={() => setModal({ type: 'add-manage-token' })}>Criar Novo</Button>
         </ManageTokenHeader>
         <FormSpacer />
         <BasicTable columns={columns} rows={rows} border />

@@ -97,7 +97,7 @@ export default forwardRef(function FormCore({ formItems, register, disabled, tit
                                                             :
                                                             <>
                                                                 {item?.formSpace ? <FormSpacer /> : null}
-                                                                <Input type={item.type} placeholder={item.placeholder} value={formValue(item.ref)} onChange={e => changeForm(e.target.value, item.ref)} disabled={item.disabled || disabled} onBlur={() => typeof item?.onBlur === "function" ? item.onBlur(formValue(item.ref)) : null} white={item.white} height={item?.height} />
+                                                                <Input type={item.type} placeholder={item.placeholder} value={formValue(item.ref)} onChange={e => changeForm(e.target.value, item.ref)} disabled={item.disabled || disabled} onBlur={() => typeof item?.onBlur === "function" ? item.onBlur(formValue(item.ref)) : null} white={item.white} height={item?.height} label={item?.label} />
                                                                 {item?.text && <Text>{item.text}</Text>}
                                                             </>
                                     }

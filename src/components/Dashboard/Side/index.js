@@ -78,7 +78,10 @@ export default function DashboardSide({ opened, setOpened }) {
                             <DashboardMenuHeaderIcon src={'/icons/close.svg'} onClick={() => setOpened(false)} />
                             <Icon icon={noTitle ? "logo-mini" : "home-logo"} />
                         </DashboardMenuHeader> */}
-                        <DashboardMenuHeaderIcon src={'/icons/close.svg'} onClick={() => setOpened(false)} />
+                        <DashboardMenuHeader>
+
+                            <DashboardMenuHeaderIcon src={'/icons/close-big.svg'} onClick={() => setOpened(false)} />
+                        </DashboardMenuHeader>
                         <DashboardMenuContent>
                             {
                                 menuItems.map((item, index) => (

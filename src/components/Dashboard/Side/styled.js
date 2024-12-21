@@ -55,14 +55,12 @@ export const DashboardMenu = styled.div.attrs({
 export const DashboardMenuHeader = styled.div.attrs({
 })`     
     width: 100%; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border-bottom: 1px solid ${props => props.theme.palette.colors.shadow};
-    padding: 0 0 18px 0;
-
+    padding: 8px;
+    display: none;
+    align-items: center;
     @media (max-width: 991px) {
-        padding: 8px 0 18px 0;
+        display: block;
     }
 `;
 
@@ -70,13 +68,9 @@ export const DashboardMenuHeaderIcon = styled.img.attrs({
 })`           
     margin-right: 20px;
     cursor: pointer;
-    display: none;
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    @media (max-width: 991px) {
-        display: block;
-    }
+    width: 24px;
+    height: 24px;
+
 `;
 
 export const DashboardMenuHeaderUserContent = styled.div.attrs({

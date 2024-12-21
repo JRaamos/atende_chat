@@ -11,13 +11,6 @@ export const Load = styledCmp(ReactLoading).attrs(props => ({
     width: 20
 }))`
 `;
-// font - family: Plus Jakarta Sans;
-// font - size: 16px;
-// font - weight: 500;
-// line - height: 20.16px;
-// text - align: center;
-// text - underline - position: from - font;
-// text - decoration - skip - ink: none;
 
 export const ColorButton = styled(Button)(({ theme, nospace, between, start, small, border, width, radius }) => ({
     width: width ? width : '100%',

@@ -94,24 +94,25 @@ export const Icon = styled.img.attrs((props) => ({
 export const Title = styled.div.attrs({
 })`           
     font-size: ${props => props.small ? `20` : `32px`};
-    font-weight: 900;
-    letter-spacing: -0.005em;
+    font-weight: 600;
     text-align: left;
     margin-bottom: ${props => props.nomargin ? `0` : `16px`};
     text-transform: ${props => props.upper ? `uppercase` : `none`};
+    color: ${props => props.theme.palette.colors.black};
+    white-space: nowrap;
 
 `;
 
 export const ButtonContainer = styled.div.attrs({
 })`
     display: flex;
+    flex-wrap: wrap;
     ${p => p.column ? `
         flex-direction: column;
         ${p.start ? `align-items: flex-start;` : ``}
         ${p.center ? `align-items: center;` : ``}
         ${p.end ? `align-items: flex-end;` : ``}
     ` : ``};    
-
     justify-content: space-between;
     ${p => p.start ? `justify-content: flex-start;` : ``}
     ${p => p.center ? `justify-content: center;` : ``}
@@ -252,4 +253,43 @@ export const Text = styled.div.attrs({
   text-align: left;
 
   color: ${p => p.theme.palette.colors.lightgrey};
+
+`;
+
+export const HelpText = styled.div.attrs({
+})`
+  font-family: Plus Jakarta Sans;
+  font-size: ${p => p.small ? `12px` : `14px`};
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-align: left;
+  z-index: 100;
+
+  color: ${p => p.theme.palette.colors.lightgrey};
+  background: ${p => p.theme.palette.lightBlue.main};
+  position: absolute;
+  top: 40px;
+left: 0px;
+  padding: 4px;
+  border-radius: 4px;
+  display: ${p => p.isHovered ? `block` : `none`};
+
+  width: 400px;
+    @media (max-width: 668px) {
+        width: 300px;
+    }
+    @media (max-width: 536px) {
+        width: 200px;
+    }
+    @media (max-width: 480px) {
+
+    }
+
+  `;
+
+export const HelpContainer = styled.div.attrs({
+})`
+    position: relative;
+    display: inline-block;
+    display: ${p => p.isHovered ? `block` : `none`};
 `;

@@ -32,8 +32,8 @@ export const Radio = ({ checked, onChange, label, title, secondary, color }) => 
             <ThemedComponent>
                 <FormGroup>
                     {title ? <FormLabel component="legend"
-                        color={secondary ? 'secondary' : color ? color : 'green'} >{title}</FormLabel> : null}
-                    <FormControlLabel control={<MaterialRadio checked={checked} onChange={action} color={secondary ? 'secondary' : color ? color : 'green'} />} label={label} />
+                        color={secondary ? 'secondary' : color ? color : 'primary'} >{title}</FormLabel> : null}
+                    <FormControlLabel control={<MaterialRadio checked={checked} onChange={action} color={secondary ? 'secondary' : color ? color : 'primary'} />} label={label} />
                 </FormGroup>
             </ThemedComponent>
 

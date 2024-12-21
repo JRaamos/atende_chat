@@ -1,7 +1,7 @@
 import ContainerAuthenticated from 'containers/Authenticated'
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import { ManageAgentsContainer, ManageAgentsHeader } from './styled'
-import { ButtonContainer, FormSpacer, Icon, Title } from 'ui/styled'
+import { ButtonContainer, FormSpacer, HelpContainer, HelpText, Icon, Title } from 'ui/styled'
 import Button from 'components/Form/Button'
 import BasicTable from 'components/Form/Table'
 import { CoreContext } from 'context/CoreContext'
@@ -14,6 +14,7 @@ export default function ManageAgents() {
 
 
   const { setModal } = useContext(CoreContext)
+  const [isHovered, setIsHovered] = useState(false);
 
   const columns = [
 
@@ -40,11 +41,24 @@ export default function ManageAgents() {
       { id: 2, name: 'Especialista em vendas', createAt: '14 nov 2024 ás 16:47' },
     ]
   }, [])
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    console.log('Mouse entrou!');
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    console.log('Mouse saiu!');
+  };
   return (
     <ContainerAuthenticated free>
       <ManageAgentsContainer>
         <ManageAgentsHeader>
-          <Title small nomargin>Gerenciar Agentes <Icon icon="help" pointer /></Title>
+          <HelpText isHovered={isHovered}>Aqui você poderá criar, configurar e treinar seus próprios agentes de inteligência artificial. Para criar um agente de IA, você utilizará um atendente regular do seu plano, e também será necessário adquirir um plano de créditos específico para as mensagens que o seu agente de IA enviar.</HelpText>
+          <Title small nomargin>Gerenciar Agentes<Icon icon="help" pointer isHovered={isHovered}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave} />
+          </Title>
           <Button color='primary' width={'fit-Content'} nospace onClick={() => navigate('manage-agents/form/new')}>Criar Novo</Button>
         </ManageAgentsHeader>
         <FormSpacer />
