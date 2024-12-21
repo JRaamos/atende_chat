@@ -14,4 +14,6 @@ export const ManageAgentsHeader = styled.div.attrs({})`
   justify-content: space-between;
   gap: 20px;
   align-items: center;
+  position: relative;
+  flex-wrap: wrap;
 `;
