@@ -14,7 +14,8 @@ import DashboardHome from 'screens/Dashboard/Home'
 import DashboardMe from 'screens/Dashboard/Me'
 import ManageAgents from "screens/ManageAgents";
 import ManageToken from "screens/ManageToken";
-import AgentsIaForm from "components/AgentsIaForm";
+import AgentsIaForm from "screens/AgentsIaForm";
+
 
 export default function AppRouter() {
   return (
