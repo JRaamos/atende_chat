@@ -22,6 +22,9 @@ export const TabsWrapper = styled.div`
   @media (max-width: 768px) {
     flex-wrap: wrap;
   }
+  @media (max-width: 442px) {
+    padding: 0 20px;
+  }
 `;
 
 export const Tab = styled.div`
@@ -124,15 +127,16 @@ export const IconContainer = styled.div`
 
 export const Label = styled.div`
   position: absolute;
-  bottom: -20px;
+  bottom: -48px;
   color: ${(p) =>
     p.isActive
       ? p.theme.palette.colors.black
       : p.theme.palette.colors.lightgrey};
   white-space: nowrap;
   transition: color 0.3s ease;
-
+    height: 40px;
   @media (max-width: 768px) {
     font-size: 12px;
+    white-space: wrap;
   }
 `;

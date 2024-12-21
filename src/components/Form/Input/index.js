@@ -17,6 +17,8 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 
+
+
 import { ThemedComponent } from "ui/theme";
 
 
@@ -35,7 +37,9 @@ export const InputRaw = (props) => {
         <>
             <ThemedComponent>
                 {/* standard | outlined | filled */}
-                <FormControl fullWidth variant={"standard"}>
+                {!props.label ? null : <InputLabel htmlFor={props.id}
+                    color={props.secondary ? 'secondary' : 'primary'} >{props.label}</InputLabel>}
+                <FormControl fullWidth variant={"standard"} >
                     {props.holder ? null : <StyledInputLabel htmlFor={props.id}
                         color={props.secondary ? 'secondary' : 'primary'} >{props.placeholder}</StyledInputLabel>}
                     <MaterialInput

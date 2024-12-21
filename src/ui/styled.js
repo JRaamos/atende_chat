@@ -95,7 +95,6 @@ export const Title = styled.div.attrs({
 })`           
     font-size: ${props => props.small ? `20` : `32px`};
     font-weight: 900;
-    line-height: 36px;
     letter-spacing: -0.005em;
     text-align: left;
     margin-bottom: ${props => props.nomargin ? `0` : `16px`};
@@ -119,7 +118,7 @@ export const ButtonContainer = styled.div.attrs({
     ${p => p.end ? `justify-content: flex-end;` : ``}
 
     width: 100%;
-    ${p => p.space ? `gap: 24px` : ``}
+    ${p => p.space ? `gap: 8px` : ``}
 `;
 
 export const FormTitle = styled.div.attrs({
@@ -249,9 +248,8 @@ export const Text = styled.div.attrs({
   font-family: Plus Jakarta Sans;
   font-size: ${p => p.small ? `12px` : `14px`};
   font-weight: 400;
-  line-height: 28px;
   letter-spacing: 0.02em;
   text-align: left;
 
-  color: ${p => p.theme.palette.colors.black};
+  color: ${p => p.theme.palette.colors.lightgrey};
 `;

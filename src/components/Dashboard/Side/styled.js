@@ -17,7 +17,7 @@ export const DashboardMenu = styled.div.attrs({
     className: 'menu-contant'
 })`           
     max-width: 300px;
-    background: ${props => props.theme.palette.colors.background};
+    background: ${props => props.theme.palette.colors.white};
     width: 100%;
     z-index: 101;
     display: flex;
@@ -27,9 +27,8 @@ export const DashboardMenu = styled.div.attrs({
     min-width: ${p => p.open ? '300px' : 'fit-content'};
     padding: 8px 16px;
     border-radius: 8px;
+    border: 1px solid ${p => p.theme.palette.colors.shadow};
 
-    // box-shadow: 0px 2px 8px 0px ${props => props.theme.palette.colors.shadow};
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     overflow: auto;
     height: calc(100vh - 32px);
 

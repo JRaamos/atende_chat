@@ -11,45 +11,37 @@ import { EmptyMessage, Load, LoadCenter } from 'ui/styled';
 import CustomTablePagination from 'components/CustomTablePagination';
 import { CheckContainer, HeaderUserImage, RowContainer, WhiteBg } from './styled';
 import Check from '../Check';
-// font - family: Plus Jakarta Sans;
-// font - size: 14px;
-// font - weight: 400;
-// line - height: 28px;
-// letter - spacing: 0.02em;
-// text - align: left;
-// text - underline - position: from - font;
-// text - decoration - skip - ink: none;
-
 
 const StyledTableCell = styled(TableCell)(({ theme, noMax, border }) => ({
   [`&.${tableCellClasses.head}`]: {
-    color: theme.palette.colors.black,
+    color: theme.palette.colors.white,
+    backgroundColor: theme.palette.primary.main,
     textTransform: 'uppercase',
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: 700,
-    lineHeight: '16.8px',
-    textAlign: 'left',
+    lineHeight: '28px',
     fontFamily: 'Urbanist',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     fontWeight: 400,
     lineHeight: '28px',
-    textAlign: 'left',
     fontFamily: 'Plus Jakarta Sans',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     maxWidth: '270px',
     whiteSpace: 'nowrap',
-    border: border && `1px solid ${theme.palette.colors.shadow}`,
+    // border: border && `1px solid ${theme.palette.colors.shadow}`,
 
   },
 }));
 
 const StyledTableBody = styled(TableBody)(({ theme, border }) => ({
   border: border && `1px solid ${theme.palette.colors.shadow}`,
+  borderRadius: 8,
 }));
 
 export default function BasicTable({ columns, rows, loading, pagination, selectable, border }) {
@@ -88,7 +80,7 @@ export default function BasicTable({ columns, rows, loading, pagination, selecta
             )}
             {
               columns?.map((item, key) =>
-                <StyledTableCell key={key} align={key === 0 ? "left" : "left"} >{item.title}</StyledTableCell>
+                <StyledTableCell key={key} align={key === 0 ? "left" : "center"} >{item.title}</StyledTableCell>
               )
             }
           </TableRow>
@@ -113,11 +105,8 @@ export default function BasicTable({ columns, rows, loading, pagination, selecta
               )}
               {
                 columns?.map((item, key) =>
-                  <StyledTableCell key={key} align={key === 0 ? "left" : "left"} border={border}>
-                    <RowContainer>
-                      {item?.['profile'] ? <HeaderUserImage url={row?.url} /> : null}
-                      {item?.['renderCell'] ? item.renderCell({ row }) : row?.[item.ref]}
-                    </RowContainer>
+                  <StyledTableCell key={key} align={key === 0 ? "left" : "center"} border={border}>
+                    {item?.['renderCell'] ? item.renderCell({ row }) : row?.[item.ref]}
                   </StyledTableCell>
                 )
               }

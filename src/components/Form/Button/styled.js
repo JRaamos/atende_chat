@@ -21,7 +21,7 @@ export const Load = styledCmp(ReactLoading).attrs(props => ({
 
 export const ColorButton = styled(Button)(({ theme, nospace, between, start, small, border, width, radius }) => ({
     width: width ? width : '100%',
-    minHeight: small ? 40 : 48,
+    height: small ? 40 : 48,
     marginTop: nospace ? '0px' : '16px',
     padding: small ? '4px 12px' : '12px 24px',
     textTransform: 'none',
