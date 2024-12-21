@@ -98,6 +98,7 @@ export const Title = styled.div.attrs({
     text-align: left;
     margin-bottom: ${props => props.nomargin ? `0` : `16px`};
     text-transform: ${props => props.upper ? `uppercase` : `none`};
+    color: ${props => props.theme.palette.colors.black};
 
 `;
 

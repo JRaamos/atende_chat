@@ -16,6 +16,7 @@ export const UploadContainer = styled.div.attrs({
   align-items: center;
   gap: 24px;
   justify-content: flex-end;
+  background: ${props => props.theme.palette.colors.backgroundgrey};
   border: 2px dashed ${props => props.theme.palette.colors.shadow};
   border-radius: 4px;
   padding: 20px;
@@ -25,6 +26,9 @@ export const UploadContainer = styled.div.attrs({
   margin: auto;
   width: 100%;
   ${p => p.image ? `background:url(${p.image}) no-repeat center center / cover` : ``}
+  min-height: 200px;
+  transition: all 0.3s ease;
+  justify-content: center;
 `;
 
 export const HiddenInput = styled.input.attrs({

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Icon, Title } from 'ui/styled'
 import { KnowledgeContainer, KnowledgeFormOptions, KnowledgeOption } from './styled'
 import QuestionsAnswers from 'components/QuestionsAnswers';
+import WebSites from 'components/WebSites';
+import QuestionsFile from 'components/QuestionsFile';
 
 export default function KnowledgeForm() {
 
@@ -28,6 +30,8 @@ export default function KnowledgeForm() {
         </KnowledgeFormOptions>
 
         {activeTab === 0 ? <QuestionsAnswers /> : null}
+        {activeTab === 1 ? <WebSites /> : null}
+        {activeTab === 2 ? <QuestionsFile /> : null}
 
 
       </KnowledgeContainer>
