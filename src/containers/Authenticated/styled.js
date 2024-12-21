@@ -25,6 +25,8 @@ export const DashboardBodyContent = styled.div.attrs({
     @media (max-width: 991px) {
         width: 100%;
         padding: 0 16px;
+        margin-top: 84px;
+        min-height: calc(100vh - 100px);
     }
 `;
 

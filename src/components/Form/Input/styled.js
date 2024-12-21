@@ -29,7 +29,6 @@ export const InputIcon = styledCmp.img.attrs({
 
 export const StyledInputLabel = styled(InputLabel)(({ theme, grey, top }) => ({
   zIndex: 1,
-
   marginLeft: '10px',
   marginBottom: '20px',
   '&.MuiInputLabel-root + .MuiInput-root': {
