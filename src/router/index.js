@@ -14,6 +14,7 @@ import DashboardHome from 'screens/Dashboard/Home'
 import DashboardMe from 'screens/Dashboard/Me'
 import ManageAgents from "screens/ManageAgents";
 import ManageToken from "screens/ManageToken";
+import AgentsIaForm from "components/AgentsIaForm";
 
 export default function AppRouter() {
   return (
@@ -26,6 +27,7 @@ export default function AppRouter() {
           </Route>
           <Route path="/manage-agents" exact> <ManageAgents /> </Route>
           <Route path="/manage-tokens" exact> <ManageToken /> </Route>
+          <Route path="/manage-agents/form/:mode" exact> <AgentsIaForm /> </Route>
           {/* <Route path="/login" exact> <Login /> </Route>
           <Route path="/register" exact> <Register /> </Route>
           <Route path="/forgot" exact> <Forgot /> </Route>

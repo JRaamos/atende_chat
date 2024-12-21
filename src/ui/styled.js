@@ -1,59 +1,59 @@
-import styled from 'styled-components' 
+import styled from 'styled-components'
 import ReactLoading from 'react-loading';
 import Lottie from 'react-lottie';
 
 export const hexToRgb = (hex) => {
     var c;
-    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
-        c= hex.substring(1).split('');
-        if(c.length === 3){
-            c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+        c = hex.substring(1).split('');
+        if (c.length === 3) {
+            c = [c[0], c[0], c[1], c[1], c[2], c[2]];
         }
-        c= '0x'+c.join('');
-        return [(c>>16)&255, (c>>8)&255, c&255].join(',') ;
+        c = '0x' + c.join('');
+        return [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',');
     }
     return `255,255,255`
-}  
+}
 
-export const Touch = styled.div.attrs({ 
+export const Touch = styled.div.attrs({
 })`         
     cursor: pointer;
     &:hover{
-        box-shadow: 0px 1px 3px ${ props => props.theme.palette.colors.shadow };
+        box-shadow: 0px 1px 3px ${props => props.theme.palette.colors.shadow};
     }
 `;
 
-export const Load = styled(ReactLoading).attrs({ 
-    type:'spin',
-    color:'#ffffff',
-    height:20,
-    width:20
+export const Load = styled(ReactLoading).attrs({
+    type: 'spin',
+    color: '#ffffff',
+    height: 20,
+    width: 20
 })`          
 `;
- 
-export const Animation = styled(Lottie).attrs( props => ({  
-    options:{
+
+export const Animation = styled(Lottie).attrs(props => ({
+    options: {
         loop: true,
-        autoplay: true, 
+        autoplay: true,
         rendererSettings: {
             preserveAspectRatio: 'xMidYMid slice'
         },
         animationData: props.animationData
-    }, 
+    },
     width: props.width ? props.width : 320
 }))`        
     max-width: 100%;
-`;  
+`;
 
-export const EmptyMessage = styled.div.attrs({ 
+export const EmptyMessage = styled.div.attrs({
 })`         
     padding: 32px; 
     text-align: center;
     font-size: 14px;
-    color: ${ props => props.theme.palette.colors.black };
+    color: ${props => props.theme.palette.colors.black};
 `;
 
-export const LoadCenter = styled.div.attrs({ 
+export const LoadCenter = styled.div.attrs({
 })`         
     width: 20px;
     margin: 32px auto; 
@@ -61,14 +61,14 @@ export const LoadCenter = styled.div.attrs({
     justify-content: center;
 `;
 
-export const DecoratedScroll = styled.div.attrs({ 
+export const DecoratedScroll = styled.div.attrs({
 })`
 
     overflow: auto; 
 
     ::-webkit-scrollbar-thumb {
-        background-color: ${ props => props.theme.palette.secondary.main };
-        outline: 0 solid ${ props => props.theme.palette.secondary.main };
+        background-color: ${props => props.theme.palette.secondary.main};
+        outline: 0 solid ${props => props.theme.palette.secondary.main};
     }
 
     ::-webkit-scrollbar {
@@ -88,11 +88,11 @@ export const Icon = styled.img.attrs((props) => ({
     margin: ${props => props.nomargin ? `0` : `0 2px`} ;
     z-index: 1;
     ${props => props.pointer ? `cursor: pointer;` : ``}
+    width: ${props => props.width ? `${props.width}px` : `24px`};
 `;
 
 export const Title = styled.div.attrs({
 })`           
-
     font-size: ${props => props.small ? `20` : `32px`};
     font-weight: 900;
     line-height: 36px;
@@ -108,15 +108,15 @@ export const ButtonContainer = styled.div.attrs({
     display: flex;
     ${p => p.column ? `
         flex-direction: column;
-        ${ p.start ? `align-items: flex-start;` : ``}
-        ${ p.center ? `align-items: center;` : ``}
-        ${ p.end ? `align-items: flex-end;` : ``}
+        ${p.start ? `align-items: flex-start;` : ``}
+        ${p.center ? `align-items: center;` : ``}
+        ${p.end ? `align-items: flex-end;` : ``}
     ` : ``};    
 
     justify-content: space-between;
-    ${ p => p.start ? `justify-content: flex-start;` : ``}
-    ${ p => p.center ? `justify-content: center;` : ``}
-    ${ p => p.end ? `justify-content: flex-end;` : ``}
+    ${p => p.start ? `justify-content: flex-start;` : ``}
+    ${p => p.center ? `justify-content: center;` : ``}
+    ${p => p.end ? `justify-content: flex-end;` : ``}
 
     width: 100%;
     ${p => p.space ? `gap: 24px` : ``}
@@ -238,8 +238,20 @@ export const FullLoad = styled.div.attrs({
     position: fixed;
     inset: 0 0 0 0;
     z-index: 999;
-    background: ${ ({theme}) => theme.palette.colors.shadow };
+    background: ${({ theme }) => theme.palette.colors.shadow};
     display: flex;
     justify-content: center;
     align-items: center;
+`;
+
+export const Text = styled.div.attrs({
+})`
+  font-family: Plus Jakarta Sans;
+  font-size: ${p => p.small ? `12px` : `14px`};
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0.02em;
+  text-align: left;
+
+  color: ${p => p.theme.palette.colors.black};
 `;

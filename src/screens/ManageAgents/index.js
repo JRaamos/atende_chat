@@ -5,8 +5,13 @@ import { ButtonContainer, FormSpacer, Icon, Title } from 'ui/styled'
 import Button from 'components/Form/Button'
 import BasicTable from 'components/Form/Table'
 import { CoreContext } from 'context/CoreContext'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 export default function ManageAgents() {
+
+  const history = useHistory();
+  const navigate = to => history.push(`/${to}`);
+
 
   const { setModal } = useContext(CoreContext)
 
@@ -20,8 +25,8 @@ export default function ManageAgents() {
       renderCell: ({ row }) => (
         <>
           <ButtonContainer center space noResponsive>
-            <Icon icon='edit' nomargin pointer onClick={() => { }} />
-            <Icon icon='trash' nomargin pointer onClick={() => setModal({ type: "delete" })} />
+            <Icon icon='edit' nomargin pointer onClick={() => navigate(`manage-agents/form/edit?id=${row?.id}`)} />
+            <Icon icon='trash' nomargin pointer onClick={() => setModal({ type: "sample" })} />
           </ButtonContainer>
         </>
       )
@@ -39,10 +44,8 @@ export default function ManageAgents() {
     <ContainerAuthenticated free>
       <ManageAgentsContainer>
         <ManageAgentsHeader>
-          <Title small >Gerenciar Agentes
-            <Icon icon="help" pointer />
-          </Title>
-          <Button color='primary' width={'fit-Content'} nospace>Criar Novo</Button>
+          <Title small nomargin>Gerenciar Agentes <Icon icon="help" pointer /></Title>
+          <Button color='primary' width={'fit-Content'} nospace onClick={() => navigate('manage-agents/form/new')}>Criar Novo</Button>
         </ManageAgentsHeader>
         <FormSpacer />
         <BasicTable columns={columns} rows={rows} border />

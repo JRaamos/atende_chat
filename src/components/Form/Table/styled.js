@@ -35,5 +35,4 @@ export const RowContainer = styled.div.attrs({
   display: flex;
   gap: 6px;
   align-items: center;
-  width: 100%;
 `;

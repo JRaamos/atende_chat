@@ -35,8 +35,8 @@ export const InputRaw = (props) => {
         <>
             <ThemedComponent>
                 {/* standard | outlined | filled */}
-                <FormControl fullWidth variant={"standard"} >
-                    {props.holder ? null : <StyledInputLabel htmlFor={props.id} shrink
+                <FormControl fullWidth variant={"standard"}>
+                    {props.holder ? null : <StyledInputLabel htmlFor={props.id}
                         color={props.secondary ? 'secondary' : 'primary'} >{props.placeholder}</StyledInputLabel>}
                     <MaterialInput
                         id={props.id}

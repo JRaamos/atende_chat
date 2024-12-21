@@ -34,5 +34,6 @@ export const ColorButton = styled(Button)(({ theme, nospace, between, start, sma
     boxShadow: 'none',
     borderRadius: radius && radius,
     whiteSpace: 'nowrap',
+    alignItems: 'center',
 
 }));

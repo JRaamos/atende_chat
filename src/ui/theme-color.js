@@ -8,7 +8,7 @@ export const theme = createTheme({
       contrastText: '#fff',
     },
     secondary: {
-      main: '#d81b60',
+      main: '#61dafb',
       contrastText: '#fff',
     },
     white: {
@@ -27,6 +27,14 @@ export const theme = createTheme({
     },
     success: {
       main: '#66bb6a',
+    },
+    lightgrey: {
+      main: '#F7F7F7',
+      contrastText: '#000',
+    },
+    blue: {
+      main: '#1E90FF',
+      contrastText: '#fff',
     },
     colors: {
       white: '#ffffff',
