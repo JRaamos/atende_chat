@@ -19,5 +19,5 @@ export const Content = styled.div.attrs({})``;
 export const ObjectiveContent = styled.div.attrs({})`
   display: flex;
   gap: 24px;
-  flex-wrap: wrap;
+  flex-direction: column;
 `;

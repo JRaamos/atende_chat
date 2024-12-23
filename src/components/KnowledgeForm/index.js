@@ -1,13 +1,18 @@
-import React, { useState } from 'react'
-import { Icon, Title } from 'ui/styled'
+import React, { useContext, useState } from 'react'
+import { ButtonContainer, Icon, Title } from 'ui/styled'
 import { KnowledgeContainer, KnowledgeFormOptions, KnowledgeOption } from './styled'
 import QuestionsAnswers from 'components/QuestionsAnswers';
 import WebSites from 'components/WebSites';
 import QuestionsFile from 'components/QuestionsFile';
+import { CoreContext } from 'context/CoreContext';
+import { CreateAgentIa } from 'services/agentsIa';
+import Button from 'components/Form/Button';
 
 export default function KnowledgeForm() {
 
   const [activeTab, setActiveTab] = useState(0);
+
+  const { behaviorId, profileId } = useContext(CoreContext);
 
   const options = [
     { label: "Perguntas e Respostas", icon: <Icon icon="help" pointer /> },
@@ -17,6 +22,16 @@ export default function KnowledgeForm() {
 
   const handleActiveTab = (index) => {
     setActiveTab(index);
+  }
+
+  const save = async () => {
+    const payload = {
+      behaviorId,
+      profileId
+    }
+    console.log(behaviorId, profileId);
+
+    const result = await CreateAgentIa(payload);
   }
 
   return (
@@ -33,7 +48,9 @@ export default function KnowledgeForm() {
         {activeTab === 1 ? <WebSites /> : null}
         {activeTab === 2 ? <QuestionsFile /> : null}
 
-
+        <ButtonContainer>
+          <Button color='primary' width={'fit-Content'} nospace onClick={save}>Salvar</Button>
+        </ButtonContainer>
       </KnowledgeContainer>
     </>
   )

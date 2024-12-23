@@ -1,11 +1,14 @@
 import ContainerAuthenticated from 'containers/Authenticated'
-import React, { useContext, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { ManageAgentsContainer, ManageAgentsHeader } from './styled'
 import { ButtonContainer, FormSpacer, HelpContainer, HelpText, Icon, Title } from 'ui/styled'
 import Button from 'components/Form/Button'
 import BasicTable from 'components/Form/Table'
 import { CoreContext } from 'context/CoreContext'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { supabase } from 'services/createClient'
+import { ReadAgents } from 'services/agentsIa'
+import { toast } from 'react-toastify'
 
 export default function ManageAgents() {
 
@@ -15,11 +18,13 @@ export default function ManageAgents() {
 
   const { setModal } = useContext(CoreContext)
   const [isHovered, setIsHovered] = useState(false);
+  const [registers, setRegisters] = useState([])
+
 
   const columns = [
 
     { title: 'Nome', ref: 'name' },
-    { title: 'Data da Criação', ref: 'createAt' },
+    { title: 'Data da Criação', ref: 'created_at' },
 
     {
       title: 'Ações',
@@ -27,7 +32,7 @@ export default function ManageAgents() {
         <>
           <ButtonContainer center space noResponsive>
             <Icon icon='edit' nomargin pointer onClick={() => navigate(`manage-agents/form/edit?id=${row?.id}`)} />
-            <Icon icon='trash' nomargin pointer onClick={() => setModal({ type: "sample" })} />
+            <Icon icon='trash' nomargin pointer onClick={() => toast.error('Em breve')} />
           </ButtonContainer>
         </>
       )
@@ -36,20 +41,30 @@ export default function ManageAgents() {
 
 
   const rows = useMemo(() => {
-    return [
-      { id: 1, name: 'Especialista em vendas', createAt: '14 nov 2024 ás 16:47' },
-      { id: 2, name: 'Especialista em vendas', createAt: '14 nov 2024 ás 16:47' },
-    ]
-  }, [])
+    return (registers || [])
+  }, [registers])
   const handleMouseEnter = () => {
     setIsHovered(true);
-    console.log('Mouse entrou!');
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    console.log('Mouse saiu!');
   };
+
+  const init = async () => {
+    const result = await ReadAgents()
+    if (result) {
+
+      const formattedData = result.map(agent => ({
+        ...agent,
+        name: agent.profile?.name
+      }));
+
+      setRegisters(formattedData)
+    }
+  }
+
+  useEffect(() => { init() }, [])
   return (
     <ContainerAuthenticated free>
       <ManageAgentsContainer>
