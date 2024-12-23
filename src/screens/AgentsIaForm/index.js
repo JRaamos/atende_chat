@@ -19,12 +19,23 @@ export default function AgentsIaForm() {
   const [activeTab, setActiveTab] = useState(0);
 
   const { mode } = useParams()
+
+
+
+
   const tabsData = [
     { label: "Perfil", icon: <Icon icon="work" pointer /> },
     { label: "Comportamento", icon: <Icon icon="phone" pointer /> },
     { label: "Base de Conhecimento", icon: <Icon icon="white" pointer /> },
   ];
 
+  const next = () => {
+    if (activeTab < tabsData.length - 1) {
+      setActiveTab(activeTab + 1);
+      return;
+    }
+    navigate('manage-agents');
+  }
 
   return (
     <ContainerAuthenticated free>
@@ -34,9 +45,9 @@ export default function AgentsIaForm() {
           <Button color='primary' width={'fit-Content'} nospace onClick={() => navigate('manage-agents')}>Voltar</Button>
         </ManageAgentsHeader>
         <CustomTabs tabs={tabsData} activeTab={activeTab} setActiveTab={setActiveTab} >
-          {activeTab !== 0 ? null : <AgentsProfile />}
-          {activeTab !== 1 ? null : <Behavior />}
-          {activeTab !== 2 ? null : <KnowledgeForm />}
+          {activeTab !== 0 ? null : <AgentsProfile next={next} />}
+          {activeTab !== 1 ? null : <Behavior next={next} />}
+          {activeTab !== 2 ? null : <KnowledgeForm next={next} />}
         </CustomTabs>
       </ManageAgentsContainer>
     </ContainerAuthenticated>

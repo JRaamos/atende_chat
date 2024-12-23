@@ -1,13 +1,22 @@
 import Wrapper from 'components/Wrapper'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { BehaviorContainer, ButtonContent, CheckContainer, Container, Content } from './styled'
 import Input from 'components/Form/Input'
 import { ButtonContainer, FormSpacer, Text, Title } from 'ui/styled'
 import Check from 'components/Form/Check'
 import Button from 'components/Form/Button'
 import { InputLabel } from '@mui/material'
+import { CreateBehavior, UpdateBehavior } from 'services/behaviors'
+import { toast } from 'react-toastify'
+import { CoreContext } from 'context/CoreContext'
+import { ReadOneAgent } from 'services/agentsIa'
 
-export default function Behavior() {
+export default function Behavior({ next }) {
+
+  const { setBehaviorId, behaviorId } = useContext(CoreContext)
+
+  const searchParams = new URLSearchParams(window.location.search)
+  const id = searchParams.get('id')
 
   const [form, setForm] = useState({})
   const formValue = ref => { return form?.[ref] ? form?.[ref] : ''; }
@@ -28,6 +37,68 @@ export default function Behavior() {
     { label: 'Sempre', value: 'always' },
   ]
 
+
+  const valid = () => {
+    if (!formValue('maximumResponses') || !formValue('responseTime') || !formValue('voice')) {
+      toast.error('Preencha todos os campos')
+      return false
+    }
+    if (formValue('responseTime') > 90) {
+      toast.error('O tempo máximo deve ser até 90 segundos')
+      return false
+    }
+
+    if (formValue('maximumResponses') < 1) {
+      toast.error('O número máximo de respostas deve ser maior que 0')
+      return false
+    }
+    if (formValue('responseTime') < 1) {
+      toast.error('O tempo máximo deve ser maior que 0')
+      return false
+    }
+
+    return true
+
+  }
+
+  const init = async () => {
+    if (id) {
+      const result = await ReadOneAgent(id)
+      if (result?.behavior) {
+        setForm({
+          maximumResponses: result.behavior.maximumResponses,
+          responseTime: result.behavior.responseTime,
+          voice: result.behavior.voice,
+        })
+        setCheckOption(result.behavior.afterLimit)
+        setResponseTime(result.behavior.respondCallTransfer)
+        setAudioResponse(result.behavior.responseAudio)
+        setBehaviorId(result.behavior.id)
+      }
+    }
+  }
+
+  const save = async () => {
+    if (!valid()) return
+
+    const payload = {
+      maximumResponses: formValue('maximumResponses'),
+      afterLimit: checkOption,
+      responseTime: formValue('responseTime'),
+      respondCallTransfer: responseTime,
+      voice: formValue('voice'),
+      responseAudio: audioResponse,
+    }
+
+    const result = id ? await UpdateBehavior(behaviorId, payload) : await CreateBehavior(payload)
+    if (result) {
+      setBehaviorId(result.id)
+      next()
+    }
+  }
+
+  useEffect(() => { init() }, [])
+
   return (
     <>
       <BehaviorContainer>
@@ -36,8 +107,8 @@ export default function Behavior() {
             <Input
               label="Número máximo de respostas da IA"
               type="number"
-              value={formValue('maxAnswers')}
-              onChange={e => changeForm(e.target.value, 'maxAnswers')}
+              value={formValue('maximumResponses')}
+              onChange={e => changeForm(e.target.value, 'maximumResponses')}
             />
           </Content>
           <Content>
@@ -63,8 +134,8 @@ export default function Behavior() {
             <Input
               label="Aguardar para responder (máximo 90 segundos)"
               type="number"
-              value={formValue('maxAnswers')}
-              onChange={e => changeForm(e.target.value, 'maxAnswers')}
+              value={formValue('responseTime')}
+              onChange={e => changeForm(e.target.value, 'responseTime')}
             />
             <Text small>
               Tempo mínimo que a IA deve aguardar para responder à pergunta.
@@ -125,6 +196,11 @@ export default function Behavior() {
             </Container>
           </Content>
         </Wrapper>
+        <ButtonContainer>
+          <ButtonContainer>
+            <Button color='primary' width={'fit-Content'} nospace onClick={save}>Salvar e continuar</Button>
+          </ButtonContainer>
+        </ButtonContainer>
       </BehaviorContainer >
     </>
   )
