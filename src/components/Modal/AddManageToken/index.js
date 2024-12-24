@@ -1,21 +1,33 @@
 import { CoreContext } from 'context/CoreContext'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { FormSpacer, FormText, Title } from 'ui/styled'
 import { CompanyButtonContainer } from './styled'
 import Wrapper from '../Wrapper';
 import Button from 'components/Form/Button';
 import FormCore from 'components/Form/Core';
+import { CreateToken, ReadToken, ReadTokenById, UpdateToken } from 'services/token';
 
 export default function ModalAddManageToken() {
 
   const { modal, setModal } = useContext(CoreContext)
 
+  const refForm = useRef()
+
+  const [register, setRegister] = useState({})
+
   const close = () => {
     setModal(null)
   }
 
-  const handleSave = () => {
-    // do something
+  const handleSave = async () => {
+    const detailsForm = refForm?.current?.getForm()
+
+    const payload = {
+      name: detailsForm.name,
+      type: detailsForm.type,
+      token: detailsForm.token,
+    }
+    const result = modal?.id ? await UpdateToken(modal?.id, payload) : await CreateToken(payload)
     close()
   }
 
@@ -47,17 +59,31 @@ export default function ModalAddManageToken() {
     },
   ]
 
+  const init = async () => {
+    if (modal?.id) {
+      const result = await ReadTokenById(modal.id)
+      if (result) {
+        setRegister(result)
+      }
+    }
+  }
+
+  useEffect(() => { init() }, [modal])
+
+
   return (
     <>
       <Wrapper>
         <Title upper nomargin>Adicionar Token</Title>
         {/* <FormText>Preencha algum texto caso precise</FormText> */}
         <FormSpacer />
-        <FormCore formItems={formItems} />
+        <FormCore formItems={formItems} ref={refForm} register={register} />
         <FormSpacer />
         <CompanyButtonContainer>
           <Button onClick={close} color='lightgrey' nospace>Cancelar</Button>
-          <Button primary onClick={handleSave} color='primary' nospace>Salvar</Button>
+          <Button primary onClick={handleSave} color='primary' nospace>
+            {modal?.id ? 'Atualizar' : 'Salvar'}
+          </Button>
         </CompanyButtonContainer>
       </Wrapper>
     </>

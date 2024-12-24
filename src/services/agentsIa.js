@@ -89,7 +89,8 @@ export const DeleteAgent = async (id) => {
   const { data, error } = await supabase
     .from('agentes-ia')
     .delete()
-    .eq('id', id);
+    .eq('id', id)
+    .select();
 
   if (error) {
     console.error('Erro ao excluir agente:', error);
