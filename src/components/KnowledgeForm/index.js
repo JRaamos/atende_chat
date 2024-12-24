@@ -5,19 +5,26 @@ import QuestionsAnswers from 'components/QuestionsAnswers';
 import WebSites from 'components/WebSites';
 import QuestionsFile from 'components/QuestionsFile';
 import { CoreContext } from 'context/CoreContext';
-import { CreateAgentIa } from 'services/agentsIa';
+import { CreateAgentIa, UpdateAgent } from 'services/agentsIa';
 import Button from 'components/Form/Button';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function KnowledgeForm() {
 
+  const history = useHistory();
+  const navigate = to => history.push(`/${to}`);
+
   const [activeTab, setActiveTab] = useState(0);
 
-  const { behaviorId, profileId } = useContext(CoreContext);
+  const { behaviorId, profileId, knowledgeId } = useContext(CoreContext);
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const id = searchParams.get('id');
 
   const options = [
     { label: "Perguntas e Respostas", icon: <Icon icon="help" pointer /> },
     { label: "Websites", icon: <Icon icon="web" pointer /> },
-    { label: "Documentos", icon: <Icon icon="document" pointer /> },
+    // { label: "Documentos", icon: <Icon icon="document" pointer /> },
   ]
 
   const handleActiveTab = (index) => {
@@ -27,11 +34,16 @@ export default function KnowledgeForm() {
   const save = async () => {
     const payload = {
       behaviorId,
-      profileId
+      profileId,
+      knowledgeBaseId: knowledgeId
     }
-    console.log(behaviorId, profileId);
+    if (!id) {
+      const result = await CreateAgentIa(payload);
+    } else {
+      const result = await UpdateAgent(id, payload);
+    }
+    navigate('manage-agents');
 
-    const result = await CreateAgentIa(payload);
   }
 
   return (
@@ -46,10 +58,10 @@ export default function KnowledgeForm() {
 
         {activeTab === 0 ? <QuestionsAnswers /> : null}
         {activeTab === 1 ? <WebSites /> : null}
-        {activeTab === 2 ? <QuestionsFile /> : null}
+        {/* {activeTab === 2 ? <QuestionsFile /> : null} */}
 
         <ButtonContainer>
-          <Button color='primary' width={'fit-Content'} nospace onClick={save}>Salvar</Button>
+          <Button color='primary' width={'fit-Content'} nospace onClick={save}>Salvar e Finalizar</Button>
         </ButtonContainer>
       </KnowledgeContainer>
     </>

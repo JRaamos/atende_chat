@@ -10,7 +10,7 @@ export default function QuestionsAnswers() {
 
   const options = [
     { label: "Inserir manualmente", value: "manual", },
-    { label: "Importar de arquivo", value: "file" },
+    // { label: "Importar de arquivo", value: "file" },
   ]
 
   return (
@@ -21,7 +21,7 @@ export default function QuestionsAnswers() {
             <Radio key={index} checked={questionOption === option?.value} onChange={() => setQuestionOption(option?.value)} label={option?.label} />))}
         </RadiosContainer>
         {questionOption === 'manual' ? <QuestionsManual /> : null}
-        {questionOption === 'file' ? <QuestionsFile /> : null}
+        {/* {questionOption === 'file' ? <QuestionsFile /> : null} */}
       </QuestionsAnswersContainer>
     </>
   )

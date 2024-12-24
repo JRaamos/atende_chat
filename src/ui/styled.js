@@ -99,8 +99,6 @@ export const Title = styled.div.attrs({
     margin-bottom: ${props => props.nomargin ? `0` : `16px`};
     text-transform: ${props => props.upper ? `uppercase` : `none`};
     color: ${props => props.theme.palette.colors.black};
-    white-space: nowrap;
-
 `;
 
 export const ButtonContainer = styled.div.attrs({

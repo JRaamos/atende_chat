@@ -1,6 +1,5 @@
 
 import { toast } from "react-toastify";
-import { GET, POST, PUT, DELETE } from "./api";
 import { supabase } from "./createClient";
 
 export const CreateAgentIa = async (agentIa) => {
@@ -25,7 +24,8 @@ export const ReadAgents = async () => {
     .select(`
       *,
       profile:profileId (*),
-      behavior:behaviorId (*)
+      behavior:behaviorId (*),
+      knowledgeBase:knowledgeBaseId (*)
     `);
 
   if (error) {
@@ -47,7 +47,9 @@ export const ReadOneAgent = async (id) => {
     .select(`
       *,
       profile:profileId (*),
-      behavior:behaviorId (*)
+      behavior:behaviorId (*),
+      knowledgeBase:knowledgeBaseId (*)
+
     `)
     .eq('id', id)
     .single();
@@ -71,8 +73,7 @@ export const UpdateAgent = async (id, agent) => {
     .update({
       profileId: agent.profileId,
       behaviorId: agent.behaviorId,
-      role: agent.role,
-      status: agent.status
+      knowledgeBaseId: agent.knowledgeBaseId,
     })
     .eq('id', id);
 

@@ -127,9 +127,7 @@ export default function AgentsProfile({ next }) {
         setProfileId(result?.id)
         next()
       }
-
     }
-
   }
 
   useEffect(() => { init() }, [])
