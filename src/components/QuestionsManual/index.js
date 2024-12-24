@@ -80,7 +80,6 @@ export default function QuestionsManual() {
 
       if (updatedResult) {
         await initQuestions();
-        toast.success('Pergunta atualizada com sucesso');
       }
     } else if (data) {
       const answerResult = await CreateAnswer({ answer: data.answers });
@@ -93,7 +92,6 @@ export default function QuestionsManual() {
         if (questionResult) {
           await initQuestions();
           setKnowledgeId(id);
-          toast.success('Pergunta criada com sucesso');
         }
       }
     }

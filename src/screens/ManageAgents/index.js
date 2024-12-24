@@ -7,7 +7,7 @@ import BasicTable from 'components/Form/Table'
 import { CoreContext } from 'context/CoreContext'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { supabase } from 'services/createClient'
-import { ReadAgents } from 'services/agentsIa'
+import { DeleteAgent, ReadAgents } from 'services/agentsIa'
 import { toast } from 'react-toastify'
 
 export default function ManageAgents() {
@@ -20,6 +20,12 @@ export default function ManageAgents() {
   const [isHovered, setIsHovered] = useState(false);
   const [registers, setRegisters] = useState([])
 
+  const remove = async (id) => {
+    const result = await DeleteAgent(id);
+    if (result) {
+      await init();
+    }
+  }
 
   const columns = [
 
@@ -32,7 +38,7 @@ export default function ManageAgents() {
         <>
           <ButtonContainer center space noResponsive>
             <Icon icon='edit' nomargin pointer onClick={() => navigate(`manage-agents/form/edit?id=${row?.id}`)} />
-            <Icon icon='trash' nomargin pointer onClick={() => toast.error('Em breve')} />
+            <Icon icon='trash' nomargin pointer onClick={() => remove(row?.id)} />
           </ButtonContainer>
         </>
       )
@@ -43,6 +49,7 @@ export default function ManageAgents() {
   const rows = useMemo(() => {
     return (registers || [])
   }, [registers])
+
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -57,7 +64,9 @@ export default function ManageAgents() {
 
       const formattedData = result.map(agent => ({
         ...agent,
-        name: agent.profile?.name
+        name: agent.profile?.name,
+        // created_at: new Date(agent.created_at).toLocaleDateString()
+
       }));
 
       setRegisters(formattedData)

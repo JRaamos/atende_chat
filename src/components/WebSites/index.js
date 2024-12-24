@@ -12,7 +12,7 @@ import { ReadOneAgent } from 'services/agentsIa';
 
 export default function WebSites() {
 
-  const [form, setForm] = useState({}); // Formulário com valores padrões vazios
+  const [form, setForm] = useState({});
   const formValue = ref => { return form?.[ref] ? form?.[ref] : ''; };
   const changeForm = (value, ref) => { setForm({ ...form, [ref]: value }); };
   const [registers, setRegisters] = useState([]);
@@ -20,8 +20,6 @@ export default function WebSites() {
   const [responseTime, setResponseTime] = useState(false);
 
   const { knowledgeId, setKnowledgeId } = useContext(CoreContext);
-
-  console.log('knowledgeId', knowledgeId);
 
   const searchParams = new URLSearchParams(window.location.search);
   const id = searchParams.get('id');
@@ -33,9 +31,7 @@ export default function WebSites() {
     }
   };
 
-  useEffect(() => {
-    fetchRegisters();
-  }, [knowledgeId]);
+  useEffect(() => { fetchRegisters(); }, [knowledgeId]);
 
   const resetForm = () => {
     setForm({});
@@ -46,19 +42,23 @@ export default function WebSites() {
     let payload = {
       website: formValue('site'),
       subpastas: responseTime,
-      knowledgeBaseId: knowledgeId // Utilize o conhecimento base que já existe
+      knowledgeBaseId: knowledgeId
     };
 
-    if (form.id) {  // Verifica se estamos editando um registro existente
-      // Atualiza o recurso
-      await UpdateResource(form.id, payload);
+    if (form.id) {
+      const upResult = await UpdateResource(form.id, {
+        website: formValue('site'),
+        subpastas: responseTime,
+      });
+      resetForm();
+      await fetchRegisters();
     } else {
-      // Se não tem id, é uma criação
+
       if (knowledgeId) {
-        // Se já existe o knowledgeId, só criamos o recurso
+
         await CreateResource(payload);
       } else {
-        // Caso contrário, cria um novo KnowledgeBase
+
         const result = await CreateKnowledgeBase({});
         if (result) {
           setKnowledgeId(result.id);
@@ -68,18 +68,18 @@ export default function WebSites() {
       }
     }
 
-    fetchRegisters(); // Atualiza a tabela após salvar
-    resetForm(); // Restaura os valores do formulário
+    fetchRegisters();
+    resetForm();
   };
 
   const editQuestion = async (row) => {
-    setForm({ id: row.id, site: row.website });  // Passa o ID do item para edição
+    setForm({ id: row.id, site: row.website });
     setResponseTime(row.subpastas);
   };
 
   const removeQuestion = async (id) => {
-    await DeleteResource(id); // Chama a API para remover o registro
-    fetchRegisters(); // Atualiza a tabela após remover
+    await DeleteResource(id);
+    fetchRegisters();
   };
 
   const columns = [
@@ -113,14 +113,14 @@ export default function WebSites() {
     return registers || [];
   }, [registers]);
 
+
   const init = async () => {
-    // if (id) {
-    //   const result = await ReadOneAgent(id)
-    //   if (result?.knowledgeBase) {
-    //     setKnowledgeId(result?.knowledgeBase?.id)
-    //     fetchRegisters()
-    //   }
-    // }
+    if (id) {
+      const result = await ReadOneAgent(id)
+      if (result?.knowledgeBase) {
+        setKnowledgeId(result?.knowledgeBase?.id)
+      }
+    }
   }
 
   useEffect(() => { init() }, [])
@@ -148,7 +148,14 @@ export default function WebSites() {
               <Button color={!responseTime ? 'blue' : 'lightgrey'} onClick={() => setResponseTime(false)} nospace>Não</Button>
             </Container>
 
-            <Button color='primary' width={'fit-Content'} nospace onClick={save}>Adicionar</Button>
+            <Button
+              color='primary'
+              width={'fit-Content'}
+              nospace
+              onClick={save}
+            >
+              {form.id ? 'Editar' : 'Adicionar'}
+            </Button>
           </ButtonContainer>
         </Container>
 

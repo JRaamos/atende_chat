@@ -1,16 +1,26 @@
 import ContainerAuthenticated from 'containers/Authenticated'
-import React, { useContext, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { ManageTokenContainer, ManageTokenHeader } from './styled'
 import { ButtonContainer, FormSpacer, HelpContainer, HelpText, Icon, Title } from 'ui/styled'
 import Button from 'components/Form/Button'
 import BasicTable from 'components/Form/Table'
 import { CoreContext } from 'context/CoreContext'
+import { DeleteToken, ReadToken } from 'services/token'
 
 export default function ManageToken() {
 
-  const { setModal } = useContext(CoreContext)
+  const { setModal, modal } = useContext(CoreContext)
 
   const [isHovered, setIsHovered] = useState(false);
+  const [registers, setRegisters] = useState([])
+
+  const remove = async (id) => {
+    const result = await DeleteToken(id);
+    if (result) {
+      await init();
+    }
+  }
+
 
   const columns = [
 
@@ -22,8 +32,11 @@ export default function ManageToken() {
       renderCell: ({ row }) => (
         <>
           <ButtonContainer center space noResponsive>
-            <Icon icon='edit' nomargin pointer onClick={() => { }} />
-            <Icon icon='trash' nomargin pointer onClick={() => setModal({ type: "delete" })} />
+            <Icon icon='edit' nomargin pointer onClick={() => setModal({
+              type: "add-manage-token",
+              id: row.id,
+            })} />
+            <Icon icon='trash' nomargin pointer onClick={() => remove(row?.id)} />
           </ButtonContainer>
         </>
       )
@@ -32,21 +45,30 @@ export default function ManageToken() {
 
 
   const rows = useMemo(() => {
-    return [
-      { id: 1, name: 'Token Para acesso openAI', type: 'openIA', },
-      { id: 2, name: 'Token Para acesso Dify', type: 'DifyIa' },
-    ]
-  }, [])
+    return (registers || [])
+  }, [registers])
 
   const handleMouseEnter = () => {
     setIsHovered(true);
-    console.log('Mouse entrou!');
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    console.log('Mouse saiu!');
   };
+
+  const init = async () => {
+    const result = await ReadToken()
+    if (result) {
+      const formattedData = result.map(token => ({
+        ...token,
+        // created_at: new Date(token.created_at).toLocaleDateString()
+      }))
+      setRegisters(formattedData)
+    }
+  }
+
+  useEffect(() => { init() }, [modal])
+
   return (
     <ContainerAuthenticated free>
       <ManageTokenContainer>

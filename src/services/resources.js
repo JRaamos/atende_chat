@@ -30,12 +30,12 @@ export const GetResourcesByQuestionId = async (knowledgeBaseId) => {
   return data;
 };
 
-// Atualizar um recurso
+
 export const UpdateResource = async (id, resource) => {
   const { error } = await supabase
-    .from('resources') // Nome da tabela
+    .from('resources')
     .update(resource)
-    .eq('id', id) // Filtrar pelo ID do recurso
+    .eq('id', id)
     .select();
 
   if (error) {
