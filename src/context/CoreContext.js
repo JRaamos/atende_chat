@@ -9,12 +9,14 @@ export const CoreState = ({ children }) => {
 	const [user, setUser] = useState(ReadObject('user') ? ReadObject('user') : [])
 	const [profileId, setProfileId] = useState(null)
 	const [behaviorId, setBehaviorId] = useState(null)
+	const [knowledgeId, setKnowledgeId] = useState(null)
 
 	const contextValue = {
 		user, setUser,
 		modal, setModal,
 		profileId, setProfileId,
 		behaviorId, setBehaviorId,
+		knowledgeId, setKnowledgeId
 	}
 
 	// to persist state when app reload  

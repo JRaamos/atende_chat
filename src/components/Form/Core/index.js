@@ -68,6 +68,15 @@ export default forwardRef(function FormCore({ formItems, register, disabled, tit
         getForm(skip = false) {
             if (!valid(form, formItems) && !skip) { return; }
             return form;
+        },
+        clearForm() {
+            const clearedForm = {};
+            formItems.forEach(item => {
+                if (item.ref) {
+                    clearedForm[item.ref] = '';
+                }
+            });
+            setForm(clearedForm);
         }
     }), [form]))
 

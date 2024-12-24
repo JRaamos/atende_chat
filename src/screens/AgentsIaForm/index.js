@@ -20,9 +20,6 @@ export default function AgentsIaForm() {
 
   const { mode } = useParams()
 
-
-
-
   const tabsData = [
     { label: "Perfil", icon: <Icon icon="work" pointer /> },
     { label: "Comportamento", icon: <Icon icon="phone" pointer /> },
